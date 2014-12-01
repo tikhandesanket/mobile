@@ -38,9 +38,9 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-group :developement, :test do
-  gem  'sql-lite3-ruby'
-end
+# group :developement, :test do
+#   gem  'sql-lite3-ruby'
+# end
 
 
 group :production do
