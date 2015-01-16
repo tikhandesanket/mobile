@@ -1,0 +1,133 @@
+<div align="center" class="wrapper">
+  <h1>Enter Your Details</h1>
+<!--<%#= form_for(@user_info) do |f| %>-->
+  <!--<div class="field">-->
+    <%#= f.label :name %><br>
+    <!--<%#= f.text_field :name %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :e_mail %><br>
+    <!--<%#= f.text_field :e_mail %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :company_name %><br>
+    <!--<%#= f.text_field :company_name %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :position %><br>
+    <!--<%#= f.text_field :position %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :education %><br>
+    <!--<%#= f.text_field :education %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :mark %><br>
+    <!--<%#= f.number_field :mark %>-->
+  <!--</div>-->
+  <!--<div class="actions">-->
+    <!--<%#= f.submit %>-->
+  <!--</div>-->
+<!--<%# end %>-->
+
+
+
+<%#= form_tag "/user_infos" , :id => 'talk-us-form' do |f| %>
+    <div class="row personal_info">
+      <div class="col-xs-12">
+        <div class="normal-body">
+          <div>
+            <input type="text" class="form-control name" placeholder="Name" name="name">
+          </div>
+          <div>
+            <input type="email" class="form-control email" placeholder="Enter your email" name="email">
+          </div>
+          <div class="form-group">
+             <input type="submit"value="NEXT" class="btn btn-success next" />
+          </div>
+
+        </div>
+      </div>
+    </div>
+<%# end %>
+
+
+<div class="row hidden" id="company_info">
+  <div class="col-xs-12">
+    <div class="normal-body">
+      <div>
+        <input type="text" class="form-control name" placeholder="Company Name" name="company_name">
+      </div>
+      <div>
+        <input type="text" class="form-control email" placeholder="Enter your Position" name="position">
+      </div>
+      <div class="form-group">
+        <input type="submit"value="NEXT" class="btn btn-success company_info_next" />
+      </div>
+
+    </div>
+  </div>
+</div>
+<%# end %>
+
+<div class="row hidden" id="education_info">
+  <div class="col-xs-12">
+    <div class="normal-body">
+      <div>
+        <input type="text" class="form-control name" placeholder="Enter your Education" name="education">
+      </div>
+      <div>
+        <input type="text" class="form-control email" placeholder="Enter your Marks" name="mark">
+      </div>
+      <div class="form-group">
+        <input type="submit"value="NEXT" class="btn btn-success " />
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+  $(document).ready(function(){
+      $('.next').click(function(){
+          $('.personal_info').addClass('hidden');
+          $('#company_info').removeClass('hidden');
+                var name = $('.name').val();
+                var email = $('.email').val();
+          $.ajax({
+              type :"POST",
+              data :{name:name,email:email,info_type:'personal_info'},
+              url  :"/user_infos/first_step"
+          })
+
+      })
+
+      $('.company_info_next').click(function(){
+          $('#company_info').addClass('hidden');
+          $('#education_info').removeClass('hidden')
+          var company_name = $('.company_name').val();
+          var position = $('.position').val();
+          $.ajax({
+              type :"POST",
+              data :{company_name:company_name,position:position,info_type:'company_info'},
+              url  :"/user_infos/first_step"
+          })
+
+      })
+      $('.education_info').click(function(){
+
+          var education = $('.education').val();
+          var mark = $('.mark').val();
+          $.ajax({
+              type :"POST",
+              data :{education:education,mark:mark,info_type:'education_info'},
+              url  :"/user_infos/first_step"
+          })
+
+      })
+  })
+
+
+</script>

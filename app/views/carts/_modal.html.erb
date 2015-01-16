@@ -1,0 +1,83 @@
+
+<div id="myModal" class="modal-header">
+  <ul class="square" style="padding:0 15px;"><%= link_to t('X'),
+                                                         cart_path(cart),
+                                                         :method => :delete,
+                                                         :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                                                         :class => 'btn btn-danger' %>
+    <li class="recipe-block veg">
+      <div></div>
+      <div class="recipe-name" style="display:none;"><%=recipe_name%></div>
+      <div class="recipe-image">
+        <span class="recipe_name" style="font-size: larger;font-family: bold"><%=recipe_name%></span>
+        <%= link_to (image_tag (cart.avatar.url)) ,cart_path(cart.id)%>
+      </div>
+    </li>
+    <li class="recipe-title" style="margin:10px 0;"></li>
+    <ul class="stock-value">
+      <input type="hidden" id="item_value" value="<%=recipe_price%>">
+      <li class="food-recipe-price">Rs  <span class="food-recipe_price">0</span>/-</li>
+      <li class="food-recipe-price" style="align-items: center"></li>
+      <input type="hidden" id="food-selected_item" value="<%=cart.id%>">
+      <div class="col-xs-10 col-xs-offset-1 text-center">
+        <ul class="set-order">
+          <li class="order-less ctrl-btn pull-left"><button type="button" class="decrease-order-item" id="add-order-minus">-<i class="fa fa-minus"></i></button></li>
+          <li class="order-count"> <p class="form-control looks-input" id="food-order-count">0</p></li>
+          <li class="order-more ctrl-btn pull-right"><button type="button" class="increase-order-item" id="add-order-plus">+<i class="fa fa-plus"></i></button></li>
+        </ul>
+      </div>
+
+    </ul>
+    <li class="btn btn-warning get_recipe" style="margin:10px 0;">Get Now</li>
+  </ul>
+</div>
+
+
+<script>
+  $(document).ready(function(){
+        $('#add-order-plus').click(function(){
+            var quantity = $('#food-order-count').html();
+            var price = $('#item_value').val();
+            order_the_food (quantity,price,"+")
+        })
+        $('#add-order-minus').click(function(){
+            var quantity = $('#food-order-count').html();
+            var price = $('#item_value').val();
+            if (quantity==0){
+                alert("Please add Food items")
+                return false
+            }
+            order_the_food (quantity,price,"-")
+        })
+      function order_the_food (quantity,price,operation){
+          if (operation == '+'){
+              var add_quantity = (parseInt(quantity) + 1);
+          }
+          else{
+              var add_quantity = (parseInt(quantity) - 1)
+          }
+          var total_price = (parseInt(add_quantity) * parseInt(price))
+          $('#food-order-count').html(add_quantity);
+          $('.food-recipe_price').html(total_price)
+
+      }
+       $('.get_recipe').click(function(){
+           var quantity = $('#food-order-count').html();
+           var price = $('.food-recipe_price').html();
+           var id = $('#food-selected_item').val()
+           $.ajax({
+               type:  "POST",
+               data: {id:id, price: price,quantity: quantity},
+               url: "/carts/update_cart_value"
+
+           })
+           $('#myModal').hide();
+       })
+
+
+  })
+
+    $('#close').click(function(){
+    $('#myModal').hide();
+     })
+</script>

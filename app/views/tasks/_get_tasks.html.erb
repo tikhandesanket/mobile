@@ -1,0 +1,22 @@
+<%- model_class = Task -%>
+<%= form_for @task,{:task=>@task}  do |task|%>
+<table class="table table-striped">
+ <tbody>
+
+      <tr class="remove_tr">
+        <td><%= task.object.task %></td>
+        <td><%= task.object.description %></td>
+        <td><%=l task.object.created_at %></td>
+        <td id="remove">Remove</td>
+        <td> <%=task.submit 'Submit' ,:class=>"btn btn-warning"%>
+        </td>
+      </tr>
+
+  </tbody>
+</table>
+<% end %>
+<script>
+    $('#remove').click(function() {
+    $('.remove_tr').remove()
+    })
+ </script>

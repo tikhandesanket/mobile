@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+<%= form_for(@cart) do |f| %>
+<p>
+  <strong>Name:</strong>
+  <%= @cart.name %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @cart.price %>
+</p>
+<p>
+  <strong>:</strong>
+  <%= image_tag @cart.avatar.url %>
+</p>
+    <div class="field">
+      <%= f.file_field :avatar %>
+    </div>
+    <%= f.submit %>
+<%= link_to 'Edit', edit_cart_path(@cart) %> |
+<%= link_to 'Back', carts_path %>
+<%end%>

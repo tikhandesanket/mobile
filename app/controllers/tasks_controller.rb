@@ -4,12 +4,33 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
+    session[:task1] = Task.last.task
     @tasks = Task.all
   end
 
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+  end
+
+  def get_tasks
+    @task = Task.find(params[:task_id])
+  end
+
+  def get_tasks_list
+    @tasks = Task.all
+
+  end
+
+  def show_data
+
+    @task = Task.all.map{|task| task.task}
+    respond_to do |format|
+      format.json { render json: @task }
+   end
+
+
+
   end
 
   # GET /tasks/new

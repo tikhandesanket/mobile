@@ -1,11 +1,33 @@
 Rails.application.routes.draw do
-  resources :tasks
+  resources :user_infos do
+    collection do
+      post :first_step
+    end
+  end
+
+  resources :carts do
+    collection do
+      post :update_cart_value
+    end
+  end
+
+  resources :locations
+
+  resources :tasks do
+    collection do
+      post :get_tasks
+      post :get_tasks_list
+      get :show_data
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
    root 'tasks#index'
+
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

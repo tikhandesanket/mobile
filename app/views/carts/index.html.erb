@@ -1,0 +1,91 @@
+<h1>LISTING MENUS</h1>
+
+
+  <li class="time-slots">
+        <span class="o-time" data-meal_type="lunch_slot">12PM - 1PM
+        </span>
+
+        <span class="o-time" data-meal_type="lunch_slot">
+          1PM - 2PM
+        </span>
+        <span class="o-time selected" data-meal_type="lunch_slot">
+          2PM - 3PM
+        </span>
+        <span class="o-time" data-meal_type="lunch_slot">
+          3PM - 4PM
+        </span>
+        <span class="o-time" data-meal_type="lunch_slot">
+          4PM - 6PM
+        </span>
+  </li><br><br><br>
+
+  <%= hidden_field_tag "lunch_slot", "" %>
+
+
+
+
+  <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+   <span class="item-name" data-toggle="modal" data-target="#item-modal" data-quantity="45" style="cursor: pointer;"
+         id="order_id">
+  </span>
+
+
+
+  <% @carts.each do |cart| %>
+  <ul class="square" style="padding:0 15px;"><%= link_to t('X'),
+                                                         cart_path(cart),
+                                                         :method => :delete,
+                                                         :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                                                         :class => 'btn btn-danger' %>
+    <li class="recipe-block veg">
+      <div></div>
+      <div class="recipe-name" style="display:none;"><%=cart.name%></div>
+      <div class="recipe-image">
+        <%= link_to (image_tag (cart.avatar.url)) ,cart_path(cart.id)%>
+      </div>
+    </li>
+    <li class="recipe-title" style="margin:10px 0;"></li>
+      <ul class="stock-value">
+        <li class="recipe-stock"><span class="recipe_quantity"><%=cart.name%></span></li>
+        <li class="recipe-price">Rs  <span class="recipe_price"><%=cart.price%> </span>/-</li>
+        <li class="recipe-price" style="align-items: center"></li>
+        <input type="hidden" id="selected_item_<%=cart.id%>" food_id ="<%=cart.id%>"  value="<%=cart.id%>">
+
+      </ul>
+    <li class="btn btn-warning order_recipe" food_id ="<%=cart.id%>"  style="margin:10px 0;">Order Now</li>
+  </ul>
+<%end%>
+
+<br>
+
+<div id="myModal"></div>
+<%= link_to 'New Cart', new_cart_path,:class => "btn btn-success"  %>
+<span>This is the value of <%= text_field_tag "lunch_slot", "" ,:class=>"sss"%> </span>
+<%= text_field_tag "round_one_rate",nil, class: "round_value", id: "round_one_rate",  value:'' ,placeholder: "Round one Rate" %>
+<div id="show_time_slot">HI</div>
+<span class="item-edit" style="cursor: pointer;">
+                <i class="fa fa-pencil">click</i>
+              </span>
+<script>
+    $(document).ready(function(){
+        $('.order_recipe').click(function(){
+            var id  = $(this).attr('food_id')
+            $.ajax({
+                type: "POST",
+                data: {id: id},
+                url:"/carts/update_cart_value"
+        })
+        })
+        $('.time-slots span').click(function(){
+            $(this).parent().find('.o-time').removeClass('selected');
+            $(this).addClass('selected');
+            var time_slot = $("#lunch_slot").val();
+
+            $("#lunch_slot").val(jQuery.trim($(this).html()));
+            $("#lunch_slot").html(time_slot);
+            $('#show_time_slot').html(time_slot)
+
+        });
+    })
+
+</script>

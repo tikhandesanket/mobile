@@ -1,0 +1,1 @@
+$('#myModal').html("<%= escape_javascript(render :partial => "carts/modal",:locals => {:cart =>@cart,:recipe_name => @recipe_name, :recipe_quantity =>@recipe_quantity,:recipe_price=>@recipe_price} ) %>");
