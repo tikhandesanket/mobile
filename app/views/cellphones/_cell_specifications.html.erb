@@ -1,0 +1,39 @@
+
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">Details</h4>
+    </div>
+    <div class="modal-body">
+        <table>
+          <thead>
+          <tr>
+            <th>Index</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>Color</th>
+            <th>Operating System</th>
+            <th>Description</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @cellphones.each_with_index do |cellphone,index| %>
+              <tr class="mobile_attr success"  cellphone_id="<%=cellphone.id %>">
+                <td><%= index+1 %></td>
+                <td class="success"><%= cellphone.brand %></td>
+                <td><%= cellphone.price %></td>
+                <td><%= cellphone.color %></td>
+                <td><%= cellphone.os %></td>
+                <td><%= cellphone.details %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>

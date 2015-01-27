@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :cellphones do
+    collection do
+      post :cell_specifications
+    end
+  end
+
   resources :user_infos do
     collection do
       post :first_step

@@ -1,0 +1,65 @@
+<%- model_class = Cellphone -%>
+<h1>Mobile Specifications</h1>
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Index</th>
+    <th><%= model_class.human_attribute_name(:brand) %></th>
+    <th><%= model_class.human_attribute_name(:price) %></th>
+    <th><%= model_class.human_attribute_name(:color) %></th>
+    <th><%= model_class.human_attribute_name(:os) %></th>
+    <th><%= model_class.human_attribute_name(:details) %></th>
+
+    <th><%=t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @cellphones.each do |cellphone| %>
+      <tr class="mobile_attr"  cellphone_id="<%=cellphone.id %>">
+        <td><%= link_to cellphone.id, cellphone_path(cellphone) %></td>
+        <td><%= cellphone.brand %></td>
+        <td><%= cellphone.price %></td>
+        <td><%= cellphone.color %></td>
+        <td><%= cellphone.os %></td>
+        <td><%= cellphone.details %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_cellphone_path(cellphone), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      cellphone_path(cellphone),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
+
+<div id="myModal" class="modal fade">
+
+</div>
+
+<%= button_tag ("Compare"), :class=>"btn-danger",:onclick=> "compare_cellphones();" %>
+
+
+<%= link_to t('.New', :default => t("helpers.links.new")),
+            new_cellphone_path, :class => 'btn btn-success' %>
+
+<script type="text/javascript">
+    function compare_cellphones(){
+
+        $.ajax({
+            type :'POST',
+            url :'/cellphones/cell_specifications',
+            data :{data:"Inter the data here"}
+
+
+        })
+//        $("#myModal").modal('show');
+    }
+</script>
